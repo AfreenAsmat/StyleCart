@@ -24,7 +24,7 @@ function ProductCard({product, addToCart}) {
         loading='lazy' 
         className='w-full h-60 md:h-72 lg:h-80 transition-transform duration-700 ease-in-out transform hover:scale-105'/>
         <div className='mt-3'>
-        <h3 className='text-lg font-semibold'>{product.name}</h3>
+        <h3 className='text-lg md:text-xl md:text-2xl '>{product.name}</h3>
         <p className='text-gray-500 text-sm'>{product.category}</p>
         <p className='text-gray-800 font-bold mt-2'>Rs. {product.price}</p>
         </div>

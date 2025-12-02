@@ -6,7 +6,7 @@ import { useCart } from '../../contexts/CartContext'
 function ProductsList({products = []}) {
   const {addToCart} = useCart();
   return (
-    <section className='px-4 py-10'>
+    <section className='px-1 md:px-4 py-10'>
     <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 lg:grid-cols-4 '>
         {products.length > 0 ? (
         products.map((product) => (

@@ -69,7 +69,7 @@ function Cart() {
             alt={item.name}
             className="w-16 h-20  mr-3 rounded flex-shrink-0 "
           />
-          <div className='flex flex-col flex-1'>
+          <div className='flex flex-col flex-1 overflow-y-auto'>
             <p className="font-medium text-sm">{item.name}</p>
             {item.selectedSize && 
             <p className="text-xs text-gray-800">
