@@ -44,6 +44,11 @@ Navbar, Footer, Product Card, Product List, Filters, Cart, Checkout, and Search 
 
 ---
 
+## 🚀 Live Demo
+https://style-cart-wheat.vercel.app/
+
+---
+
 ## 📸 Screenshots
 
 ![Landing Page](public/landingpage.png)  
@@ -51,5 +56,4 @@ Navbar, Footer, Product Card, Product List, Filters, Cart, Checkout, and Search 
 ![Product Details Page](public/productDetail.png)  
 ![Checkout Page](public/checkoutpage.png)
 
-## 🚀 Live Demo
-https://style-cart-wheat.vercel.app/
+
