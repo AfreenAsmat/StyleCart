@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , useMemo} from 'react'
 import { useParams } from 'react-router-dom'
 import { products } from '../data/productsData';
 import { useCart } from '../contexts/CartContext';
@@ -37,29 +37,45 @@ function ProductDetails() {
     },[productId, product]);
 
     useEffect(() => {
-        if (!product) return;
+        const raw = JSON.parse(localStorage.getItem("recentlyViewed")) || [];
 
-        const existing = JSON.parse(localStorage.getItem("recentlyViewed")) || [];
+        const hydrate = (arr) => 
+        arr.map(item => products.find(p => p.id === item.id))
+        .filter(Boolean);
+
+         if (!product) {
+            setRecentlyViewed(hydrate(raw));
+            return;
+         }
+
+        const minimal = 
+        {id: product.id, 
+        name: product.name,
+        image: product.image || (product.images && product.images[0]) || '', 
+        price: product.price, 
+        category: product.category
+    };
         
-        const filtered = existing.filter(p => p.id !== product.id);
+        const filtered = raw.filter(p => p.id !== product.id);
 
-        const updated = [product, ...filtered];
+        const updated = [minimal, ...filtered].slice(0, 6);
 
-        localStorage.setItem("recentlyViewed", JSON.stringify(updated.slice(0, 6)));
-    },[productId]);
+        localStorage.setItem("recentlyViewed", JSON.stringify(updated));
 
-    useEffect(() => {
-        const items = JSON.parse(localStorage.getItem("recentlyViewed")) || [];
-        setRecentlyViewed(items);
-    },[productId]);
+        const fullItems = hydrate(updated);
+        setRecentlyViewed(fullItems);
+    },[productId, product]);
 
-    const relatedProducts = products
-    .filter(p => p.category === product.category && p.id !== product.id)
-    .slice(0, 6);
 
     if (!product){
         return <h2 className='text-center text-red-500 mt-20'>Product not found.</h2>
     }
+
+    const relatedProducts = useMemo(() => {
+        return products
+    .filter(p => p.category === product.category && p.id !== product.id)
+    .slice(0, 6);
+    }, [product?.category, product?.id]);
 
     const handleImgError = (e) => {
         e.currentTarget.onerror = null;
@@ -160,10 +176,12 @@ function ProductDetails() {
             <p className='mt-3 text-sm text-red-600'>Please select a size before adding to cart.</p>
         )}
       <button 
+      type='button'
       onClick={handleAddToCartClick}
+      disabled={requiresSize && !selectedSize}
       aria-disabled={requiresSize && !selectedSize}
-      className={`mt-4 py-2 px-6 rounded-lg transition bg-black text-white
-      ${requiresSize && !selectedSize ? 'cursor-not-allowed' : ''}`}>
+      className={`mt-4 py-2 px-6 rounded-lg transition bg-black text-white 
+    ${requiresSize && !selectedSize ? 'opacity-60 cursor-not-allowed' : ''}`}>
          Add to Cart
       </button>
       </div>
