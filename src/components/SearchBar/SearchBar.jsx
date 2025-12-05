@@ -119,7 +119,7 @@ function SearchBar({autoFocus}) {
         type='submit'
         className='flex items-center justify-center w-8 h-8 '
         >
-           <img src={search} alt="Search" className='w-5 h-5 invert' />
+           <img src={search} alt="Search" className='w-4 h-4 sm:h-5 sm:w-5 invert' />
         </button>
     </form>
 
